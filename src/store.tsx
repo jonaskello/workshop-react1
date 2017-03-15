@@ -1,47 +1,33 @@
-import * as ReactDOM from "react-dom";
-import * as React from "react";
-import { RootComponent } from "./components/root"
-import * as RootReducer from "./reducers/todos-reducer";
-
-export function dispatch(action: Action) {
-    const newState = RootReducer.reduce(getState(), action);
-    setState(newState);
-}
+import * as TodosReducer from "./todos/reducer";
+import * as PersonsReducer from "./persons/reducer";
+import * as RootReducer from "./root-reducer";
 
 export interface Action {
     type: string,
     payload?: any,
 }
 
-export interface State {
-    newTodo: string,
-    nextTodoKey: number,
-    todos: Array<RootReducer.TodoItem>,
-}
-
-let state: State = {
-    newTodo: "New todo",
-    nextTodoKey: 3,
-    todos: [
-        { key: 1, description: "Learn react" },
-        { key: 2, description: "Setup webpack" }
-    ],
+let state: RootReducer.RootState = {
+    todos: undefined,
+    persons: undefined,
 };
 
-export function setState(newState: State) {
+let callback;
+
+export function subscribe(c: () => void) {
+    callback = c;
+}
+
+export function dispatch(action: Action) {
+    console.log("BEFORE", state);
+    console.log("DISPATCH: ", action);
+    const newState = RootReducer.reduce(getState(), action);
     state = newState;
-    render();
+    console.log("AFTER", newState);
+    if (callback)
+        callback();
 }
 
-export function getState(): State {
+export function getState(): RootReducer.RootState {
     return state;
-}
-
-export function render() {
-
-    ReactDOM.render(
-        RootComponent({}),
-        document.getElementById('root')
-    );
-
 }

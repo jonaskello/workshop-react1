@@ -6,7 +6,6 @@ export interface Props {
 }
 
 export function todoItem({person}: Props): React.ReactElement<Props> {
-    
     return (
         <div key={person.key}>{person.description}</div>
     );

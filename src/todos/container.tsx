@@ -5,13 +5,22 @@ import * as TodosActions from "./actions";
 import { todoItem } from "./components/todo-item";
 import { TodoItem } from "./types";
 import { createContainer } from "../create-container";
+import { RootState } from "../reducer";
+import { TodosState } from "./reducer";
 
 export interface TodosProps {
 }
 
-export const TodosContainer = createContainer(TodosComponent);
+function mapPropsToState(props: TodosProps, state: RootState): TodosState {
+    return state.todos;
+}
+
+export const TodosContainer = createContainer(TodosComponent, mapPropsToState);
 
 function TodosComponent(props: TodosProps): React.ReactElement<TodosProps> {
+
+    console.log("NU RITAS TodosComponent");
+
     return (
         <div>
             Number of todos: {Store.getState().todos.todos.length}

@@ -8,7 +8,7 @@ export interface TodosState {
     todos: Array<TodoItem>,
 }
 
-const initialState = {
+export const initialState = {
     newTodo: "New todo",
     nextTodoKey: 3,
     todos: [

@@ -11,19 +11,25 @@ export interface OwnProps {
 }
 
 export interface StateProps {
-    state: RootState,
+    state: PersonsState,
     dispatch: any,
 }
 
 export type Props = OwnProps & StateProps;
 
-export const PersonsContainer = createContainer(PersonsComponent);
+function mapPropsToState(props: OwnProps, state: RootState) {
+    return state.persons;
+}
+
+export const PersonsContainer = createContainer(PersonsComponent, mapPropsToState);
 
 function PersonsComponent({ state, dispatch, color }: Props) {
+    
+    console.log("NU RITAS PersonsComponent");
     return (
         <PersonList dispatch={dispatch}
-            persons={state.persons.persons}
-            newPerson={state.persons.newPerson}
+            persons={state.persons}
+            newPerson={state.newPerson}
             color={color} />
     );
 

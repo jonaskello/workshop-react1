@@ -3,6 +3,9 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { RootComponent } from "./root"
 
+import { Action, createAddTodoAction } from "./todos/actions";
+import { reduce, initialState } from "./todos/reducer";
+
 Store.dispatch({ type: "INIT" });
 
 Store.subscribe(render);
